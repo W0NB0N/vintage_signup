@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Retro Hacker Login</title>
+  <link rel="stylesheet" href="./retro_blob.css">
+</head>
+<body>
+
+<section>
+  <!-- Pixelated Background -->
+  <div class="pixel-grid"></div>
+
+  <!-- Sign-in Form -->
+  <div class="signin">
+    <div class="content">
+      <h2>Sign In</h2>
+      <div class="form">
+        <div class="inputBox">
+          <input type="text" required>
+          <i>Username</i>
+        </div>
+        <div></div>
+        <div class="inputBox">
+          <input type="password" required>
+          <i>Password</i>
+        </div>
+        <div class="links">
+          <a href="#">Forgot Password?</a>
+          <a href="#">Sign Up</a>
+        </div>
+        <div class="inputBox">
+          <input type="submit" value="Login">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const grid = document.querySelector(".pixel-grid");
+    const spanSize = 12; // Pixel size
+    const cols = Math.floor(window.innerWidth / spanSize);
+    const rows = Math.floor(window.innerHeight / spanSize);
+    const totalSpans = cols * rows;
+    const spans = [];
+
+    for (let i = 0; i < totalSpans; i++) {
+      let span = document.createElement("span");
+      grid.appendChild(span);
+      spans.push(span);
+    }
+
+    // Add hover effect that lights up surrounding spans
+    spans.forEach((span, index) => {
+      span.addEventListener("mouseover", () => {
+        let neighbors = [
+          index - cols,    // Above
+          index + cols,    // Below
+          index - 1,       // Left
+          index + 1,       // Right
+          index - cols - 1, // Top-left
+          index - cols + 1, // Top-right
+          index + cols - 1, // Bottom-left
+          index + cols + 1  // Bottom-right
+        ];
+        
+        span.classList.add("glow"); // Glow on hover
+
+        neighbors.forEach(i => {
+          if (spans[i]) spans[i].classList.add("glow");
+        });
+
+        setTimeout(() => {
+          span.classList.remove("glow");
+          neighbors.forEach(i => {
+            if (spans[i]) spans[i].classList.remove("glow");
+          });
+        }, 300); // Glow effect duration
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
